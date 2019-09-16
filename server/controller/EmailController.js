@@ -107,7 +107,8 @@ class Email {
         const mailOptions = {
             from: req.body.username,
             to: req.body.receivers,
-            subject: req.body.subject
+            subject: req.body.subject,
+            text:req.body.body
         }
         transporter.sendMail(mailOptions, function (err, info) {
             if (err) {
