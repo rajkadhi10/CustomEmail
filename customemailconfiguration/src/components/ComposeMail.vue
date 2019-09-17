@@ -60,7 +60,8 @@ export default {
         body: this.body,
         service: this.selectedRow[0].service,
         username: this.selectedRow[0].username,
-        pass: this.selectedRow[0].password
+        pass: this.selectedRow[0].password,
+        id:this.selectedRow[0].id
       };
 
       //   -------------- Calling mail send method -------------------

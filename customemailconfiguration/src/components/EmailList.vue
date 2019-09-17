@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
-      <v-card>
+  <div id="app" >
+    <v-app id="inspire"  >
+      <v-card class="ma-5"> 
         <br />
 
         <!-- ------------------ Add email details ----------------- -->
-        <div class="d-flex justify-end mx-auto">
+        <div class="d-flex justify-end mx-auto pa-5">
           <v-btn color="primary" @click="addEmail()">
             <v-icon small dark left>fas fa-plus</v-icon>Add custom email configuration
           </v-btn>
@@ -22,7 +22,7 @@
           </v-btn>
         </div>
 
-        <div class="d-flex justify-end">
+        <div class="d-flex justify-end pa-5">
           <v-text-field
             append-icon="fas fa-search"
             class="col-4"
@@ -100,13 +100,13 @@ export default {
   data() {
     return {
       headers: [
-        { text: "#", value: "id" },
-        { text: "Username", value: "username", align: "center" },
-        { text: "UUID", value: "id_primary", align: "center", width: "25%" },
-        { text: "Service", value: "service", align: "center" },
-        { text: "Port-number", value: "" },
-        { text: "URL", value: "" },
-        { text: "ACTIONS", value: "action" }
+        { text: "#", value: "id" ,class:"text-uppercase"},
+        { text: "Username", value: "username", class:"text-uppercase" },
+        { text: "UUID", value: "id_primary", class:"text-uppercase", width: "25%" },
+        { text: "Service", value: "service", class:"text-uppercase" },
+        { text: "Port-number", value: "" ,class:"text-uppercase"},
+        { text: "URL", value: "" ,class:"text-uppercase"},
+        { text: "ACTIONS", value: "action" ,class:"text-uppercase"}
       ],
       emails: [],
       totalRows: "",
