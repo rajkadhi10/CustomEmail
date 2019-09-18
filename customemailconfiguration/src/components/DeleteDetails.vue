@@ -17,7 +17,6 @@
 
 <script>
 import emailService from "../services/EmailHandler";
-import { log } from "util";
 export default {
   data() {
     return {
