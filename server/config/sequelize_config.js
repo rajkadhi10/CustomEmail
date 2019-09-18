@@ -1,10 +1,10 @@
-const Sequelize = require('sequelize');
-const email = require('../models/email')
+const Sequelize = require("sequelize");
+const email = require("../models/email")
 
 
-const sequelize = new Sequelize('emaildb', 'postgres', 'postgres', {
-    host: '192.1.200.69',
-    dialect: 'postgres',
+const sequelize = new Sequelize("emaildb", "postgres", "postgres", {
+    host: "192.1.200.69",
+    dialect: "postgres",
     define: {
         timestamps: false
     },

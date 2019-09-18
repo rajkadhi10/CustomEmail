@@ -1,18 +1,17 @@
-const authenticate = require('../config/sequelize_config');
-const nodemailer = require('nodemailer');
-const crypto = require('crypto'),
-    algorithm = 'aes-256-ctr',
-    password = 'helloraj';
+const authenticate = require("../config/sequelize_config");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto"),
+    algorithm = "aes-256-ctr",
+    password = "helloraj";
 class Email {
 
     // -----Insert a mail details to the list---------
     async addEmailDetails(req, res) {
         try {
-
             // ------------------------- password encryption -------------------
             let cipher = crypto.createCipher(algorithm, password)
-            let crypted = cipher.update(req.body.password, 'utf8', 'hex')
-            crypted += cipher.final('hex');
+            let crypted = cipher.update(req.body.password, "utf8", "hex")
+            crypted += cipher.final("hex");
             req.body.password = crypted;
 
             // ------------------ Create row------------------------
@@ -42,6 +41,7 @@ class Email {
             });
         }
     }
+
     // --------------- Get Details by ID ------------------
     async getDetailsById(req, res) {
         try {
@@ -57,9 +57,17 @@ class Email {
             });
         }
     }
+
     // ------------------ Update email details ---------------------
     async updateEmailDetails(req, res) {
         try {
+
+            // ------------------ Password encryption -----------------
+            let cipher = crypto.createCipher(algorithm, password)
+            let crypted = cipher.update(req.body.password, "utf8", "hex")
+            crypted += cipher.final("hex");
+            req.body.password = crypted;
+
             await authenticate.emailModel.update(req.body, {
                 where: {
                     id: req.body.id
@@ -105,8 +113,8 @@ class Email {
 
             // -------------------- Decrypt the password -------------------------
             let decipher = crypto.createDecipher(algorithm, password)
-            let decryptedPassword = decipher.update(notes[0].dataValues.password, 'hex', 'utf8')
-            decryptedPassword += decipher.final('utf8');
+            let decryptedPassword = decipher.update(notes[0].dataValues.password, "hex", "utf8")
+            decryptedPassword += decipher.final("utf8");
 
 
             // -------------------- Send email [nodemailer methods] ------------------

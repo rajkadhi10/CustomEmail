@@ -1,33 +1,49 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <span class="headline">Are you sure to Delete?</span>
-    </v-card-title>
-    <v-card-actions>
-      <div class="flex grow 1"></div>
-      <v-btn color="blue darken-1" text @click="deleteClose">Close</v-btn>
-      <v-btn color="error" @click="deleteDetails()">Delete</v-btn>
-    </v-card-actions>
-  </v-card>
+  <v-dialog v-model="deleteDialog" persistent max-width="600px">
+    <v-card>
+      <v-card-title>
+        <span class="headline">Are you sure to Delete?</span>
+      </v-card-title>
+      <v-card-actions>
+        <div class="flex grow 1"></div>
+        <v-btn color="blue darken-1" text @click="deleteDialogHide">Close</v-btn>
+        <v-btn color="error" @click="deleteDetails()">Delete</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 
 
 <script>
 import emailService from "../services/EmailHandler";
+import { log } from "util";
 export default {
-  props: ["deleteDataId"],
+  data() {
+    return {
+      deleteDialog: false,
+      deleteDataId: ""
+    };
+  },
+  props: ["getEmail"],
   methods: {
+    // ------------------------Delete method called--------------------
     async deleteDetails() {
-      console.log(this.id);
       let deleteDetail = {
         id: this.deleteDataId
       };
       await emailService.deleteDetails(deleteDetail);
-      this.$router.go();
+      this.deleteDialog = false;
+      this.getEmail();
     },
-    deleteClose() {
-      this.$router.go();
+    // ----------------------Dialog close----------------------
+    deleteDialogHide() {
+      this.deleteDialog = false;
+    },
+    // ---------------------Dialog show---------------------------
+    deleteDialogShow(id) {
+      this.deleteDataId = id;
+      this.deleteDialog = true;
     }
   }
 };

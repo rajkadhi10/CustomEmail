@@ -1,42 +1,44 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <span class="headline">Edit Details</span>
-    </v-card-title>
+  <v-dialog v-model="editDialog" persistent max-width="600px">
+    <v-card>
+      <v-card-title>
+        <span class="headline">Edit Details</span>
+      </v-card-title>
 
-    <v-card-text>
-      <v-container>
-        <v-text-field
-          v-model="username"
-          :error-messages="usernameErrors"
-          label="Username"
-          required
-          outlined
-          @input="$v.username.$touch()"
-          @blur="$v.username.$touch()"
-        ></v-text-field>
-        <v-text-field
-          v-model="password"
-          type="password"
-          :error-messages="passwordErrors"
-          label="Password"
-          required
-          outlined
-          @input="$v.password.$touch()"
-          @blur="$v.password.$touch()"
-        ></v-text-field>
-        <h2>Services</h2>
-        <br />
-        <v-select :items="items" v-model="service" label="select service" outlined></v-select>
-      </v-container>
-    </v-card-text>
+      <v-card-text>
+        <v-container>
+          <v-text-field
+            v-model="username"
+            :error-messages="usernameErrors"
+            label="Username"
+            required
+            outlined
+            @input="$v.username.$touch()"
+            @blur="$v.username.$touch()"
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            type="password"
+            :error-messages="passwordErrors"
+            label="Password"
+            required
+            outlined
+            @input="$v.password.$touch()"
+            @blur="$v.password.$touch()"
+          ></v-text-field>
+          <h2>Services</h2>
+          <br />
+          <v-select :items="items" v-model="service" label="select service" outlined></v-select>
+        </v-container>
+      </v-card-text>
 
-    <v-card-actions>
-      <div class="flex-grow-1"></div>
-      <v-btn color="blue darken-1" text @click="closeEdit()">Close</v-btn>
-      <v-btn color="blue darken-1" @click="updateDetails()">Save</v-btn>
-    </v-card-actions>
-  </v-card>
+      <v-card-actions>
+        <div class="flex-grow-1"></div>
+        <v-btn color="blue darken-1" text @click="editDialogHide()">Close</v-btn>
+        <v-btn color="blue darken-1" @click="updateDetails()">Save</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 
@@ -49,13 +51,11 @@ export default {
       username: "",
       password: "",
       service: "",
-      items: ["gmail", "yahoo"]
+      items: ["gmail", "yahoo"],
+      editDialog: false
     };
   },
-  props: ["editDataId"],
-  created: function() {
-    this.getDetailsById(this.editDataId);
-  },
+  props: ["getEmail"],
   methods: {
     async getDetailsById(id) {
       this.id = id;
@@ -80,12 +80,19 @@ export default {
         service: this.service
       };
       await emailService.updateDetails(updateDetail);
-      this.$router.go();
+      this.editDialog = false;
+      this.getEmail();
     },
 
     // ------------------Close dailog-------------------
-    closeEdit() {
-      this.$router.go();
+    editDialogHide() {
+      this.editDialog = false;
+    },
+
+    // ----------------- Show dialog -------------------
+    editDialogShow(id) {
+      this.getDetailsById(id);
+      this.editDialog = true;
     }
   },
 

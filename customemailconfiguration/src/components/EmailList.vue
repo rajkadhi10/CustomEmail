@@ -1,17 +1,16 @@
 <template>
-  <div id="app" >
-    <v-app id="inspire"  >
-      <v-card class="ma-5"> 
+  <div id="app">
+    <v-app id="inspire">
+      <v-card class="ma-5">
         <br />
-
-        <!-- ------------------ Add email details ----------------- -->
+        <!-------------------- Add email details ------------------->
         <div class="d-flex justify-end mx-auto pa-5">
           <v-btn color="primary" @click="addEmail()">
             <v-icon small dark left>fas fa-plus</v-icon>Add custom email configuration
           </v-btn>
         </div>
         <v-card-title>
-          <h3>Custom Email Configuration</h3>
+          <h3 class="customFont">Custom Email Configuration</h3>
           <br />
         </v-card-title>
 
@@ -22,6 +21,7 @@
           </v-btn>
         </div>
 
+        <!----------------------- Search in table ----------------------------->
         <div class="d-flex justify-end pa-5">
           <v-text-field
             append-icon="fas fa-search"
@@ -31,6 +31,7 @@
             label="Search Contact "
           ></v-text-field>
         </div>
+
         <!--------------- Table of email details ------------------->
         <v-data-table
           v-model="selected"
@@ -65,25 +66,17 @@
           </template>
         </v-data-table>
 
-        <!-- ----------------Edit Details------------------- -->
-        <v-dialog v-model="editDialog" persistent max-width="600px">
-          <EditDetails :editDataId="selectedId" />
-        </v-dialog>
+        <!------------------ Edit Details ----------------------->
+        <EditDetails ref="editDialog" :getEmail="getemail" />
 
-        <!------------------------- Delete details ------------------------->
-        <v-dialog v-model="deleteDialog" persistent max-width="600px">
-          <DeleteDetails :deleteDataId="deletedId" />
-        </v-dialog>
+        <!----------------- Delete details ---------------------->
+        <DeleteDetails ref="deleteDialog" :getEmail="getemail" />
 
-        <!------------------------- Add details ------------------------->
-        <v-dialog v-model="addDialog" persistent max-width="600px">
-          <AddDetails />
-        </v-dialog>
+        <!----------------- Add details ------------------------->
+        <AddDetails ref="addDialog" :getEmail="getemail" />
 
-        <!------------------------- Compose mail ------------------------->
-        <v-dialog v-model="composeDialog" persistent max-width="600px">
-          <ComposeMail :selectedRow="selected" />
-        </v-dialog>
+        <!---------------- Compose mail ------------------------->
+        <ComposeMail ref="composeDialog" :selectedRow="selected" />
       </v-card>
     </v-app>
   </div>
@@ -100,26 +93,25 @@ export default {
   data() {
     return {
       headers: [
-        { text: "#", value: "id" ,class:"text-uppercase"},
-        { text: "Username", value: "username", class:"text-uppercase" },
-        { text: "UUID", value: "id_primary", class:"text-uppercase", width: "25%" },
-        { text: "Service", value: "service", class:"text-uppercase" },
-        { text: "Port-number", value: "" ,class:"text-uppercase"},
-        { text: "URL", value: "" ,class:"text-uppercase"},
-        { text: "ACTIONS", value: "action" ,class:"text-uppercase"}
+        { text: "#", value: "id", class: "text-uppercase" },
+        { text: "Username", value: "username", class: "text-uppercase" },
+        {
+          text: "UUID",
+          value: "id_primary",
+          class: "text-uppercase",
+          width: "25%"
+        },
+        { text: "Service", value: "service", class: "text-uppercase" },
+        { text: "Port-number", value: "", class: "text-uppercase" },
+        { text: "URL", value: "", class: "text-uppercase" },
+        { text: "ACTIONS", value: "action", class: "text-uppercase" }
       ],
       emails: [],
       totalRows: "",
       selected: [],
       items: ["gmail", "yahoo"],
       search: "",
-      selectedId: "",
-      deletedId: "",
-      compose: false,
-      addDialog: false,
-      editDialog: false,
-      deleteDialog: false,
-      composeDialog: false
+      compose: false
     };
   },
   components: {
@@ -130,24 +122,24 @@ export default {
   },
 
   methods: {
-    // --------------- Set id for edit operation --------------
+    // --------------- Dialog open for edit operation --------------
     editData(id) {
-      this.selectedId = id;
+      this.$refs.editDialog.editDialogShow(id);
     },
 
-    // ------------------- Set id for delete operation ----------------
+    // ------------------- Dialog open for delete operation ----------------
     deleteid(id) {
-      this.deletedId = id;
+      this.$refs.deleteDialog.deleteDialogShow(id);
     },
 
     // ---------------- Dialog opens for add email details -------------------
     addEmail() {
-      this.addDialog = true;
+      this.$refs.addDialog.addDialogShow();
     },
 
     // ------------------- Dialog opens for compose email ------------------------
     composeEmail() {
-      this.composeDialog = true;
+      this.$refs.composeDialog.composeDialogShow(this.selected);
     },
 
     // -------------------- Get email list ------------------------
@@ -161,7 +153,7 @@ export default {
     this.getemail();
   },
 
-//   ----------------------- get changes on the row selection ---------------------------
+  //   ----------------------- get changes on the row selection ---------------------------
   watch: {
     selected: function() {
       if (this.selected[0] !== undefined) {
@@ -173,3 +165,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.customFont {
+  font-family: Florence;
+}
+</style>
