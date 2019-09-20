@@ -8,6 +8,7 @@ const sequelize = new Sequelize("emaildb", "postgres", "postgres", {
     define: {
         timestamps: false
     },
+    logging: false,
     pool: {
         max: 9,
         min: 0,
@@ -16,7 +17,7 @@ const sequelize = new Sequelize("emaildb", "postgres", "postgres", {
 });
 
 sequelize.authenticate().then(() => {
-    console.log("Success!");
+    // console.log("Success!");
 }).catch((err) => {
     console.log(err);
 });
@@ -26,7 +27,7 @@ const emailModel = email(sequelize, Sequelize)
 sequelize.sync({
     force: false
 }).then(() => {
-    console.log("Db and Tables Created");
+    // console.log("Db and Tables Created");
 });
 
 module.exports = {

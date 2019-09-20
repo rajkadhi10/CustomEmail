@@ -82,11 +82,13 @@ export default {
       await emailService.updateDetails(updateDetail);
       this.editDialog = false;
       this.getEmail();
+      this.$router.push("/");
     },
 
     // ------------------Close dailog-------------------
     editDialogHide() {
       this.editDialog = false;
+      this.$router.push("/");
     },
 
     // ----------------- Show dialog -------------------

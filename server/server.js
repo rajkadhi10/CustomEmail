@@ -15,6 +15,8 @@ app.use(function (req, res, next) {
 });
 app.use("/email", route_config);
 let port = 3000;
-app.listen(port, () => {
+let server=app.listen(port, () => {
     console.log("Server is up and running on port numner " + port);
 });
+
+module.exports=server

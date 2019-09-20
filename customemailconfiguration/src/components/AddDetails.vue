@@ -99,12 +99,14 @@ export default {
       await emailhandler.addEmail(emailDetails);
       this.addDialog = false;
       this.getEmail();
+      this.$router.push("/")
     },
 
     // ----------------------- Show Dialog ------------------------
     addDialogShow() {
       this.clear();
       this.addDialog = true;
+   
     },
 
     // --------------- Clear the form ---------------------
@@ -117,6 +119,7 @@ export default {
     // ----------------- Close dialog ---------------------------
     addDialogHide() {
       this.addDialog = false;
+      this.$router.push("/")
     }
   }
 };

@@ -13,9 +13,23 @@
             label="To"
             required
             outlined
-          ></v-text-field>
+          >
+          
+          </v-text-field>
           <v-text-field v-model="subject" label="Subject" required outlined></v-text-field>
           <v-textarea v-model="body" required outlined></v-textarea>
+          <v-file-input
+            v-model="files"
+            placeholder="Upload your documents"
+            label="File input"
+            multiple
+            webkitdirectory
+            prepend-icon="mdi-paperclip"
+          >
+            <template v-slot:selection="{ text }">
+              <v-chip small label color="primary">{{ text }}</v-chip>
+            </template>
+          </v-file-input>
         </v-card-text>
         <v-card-actions>
           <v-btn class="mr-4" color="primary" @click="submit">submit</v-btn>
@@ -37,7 +51,9 @@ export default {
       subject: "",
       body: "",
       selectedRow: [],
-      composeDialog: false
+      files: [],
+      composeDialog: false,
+       chip2: true,
     };
   },
   validations: {
@@ -65,7 +81,7 @@ export default {
         service: this.selectedRow[0].service,
         username: this.selectedRow[0].username,
         pass: this.selectedRow[0].password,
-        id: this.selectedRow[0].id
+        id: this.selectedRow[0].id,
       };
 
       //   -------------- Calling mail send method -------------------
@@ -76,12 +92,13 @@ export default {
         alert("Error!!");
         this.composeDialog = false;
       }
+       this.$router.push("/")
     },
 
     // ------------------------- Close the dialog -------------------------
     composeDialogHide() {
-      // this.$router.go();
       this.composeDialog = false;
+       this.$router.push("/")
     },
     clear() {
       this.receiver = "";
@@ -92,6 +109,7 @@ export default {
       this.clear();
       this.selectedRow = selectedRow;
       this.composeDialog = true;
+
     }
   }
 };

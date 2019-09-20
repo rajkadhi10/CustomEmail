@@ -3,11 +3,14 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto"),
     algorithm = "aes-256-ctr",
     password = "helloraj";
-class Email {
 
+
+
+class Email {
     // -----Insert a mail details to the list---------
     async addEmailDetails(req, res) {
         try {
+            
             // ------------------------- password encryption -------------------
             let cipher = crypto.createCipher(algorithm, password)
             let crypted = cipher.update(req.body.password, "utf8", "hex")
@@ -134,6 +137,7 @@ class Email {
             transporter.sendMail(mailOptions, function (err, info) {
                 if (err) {
                     // ----------------Fail to send email ------------
+                    console.log(err);
                     res.send("fail");
                 } else {
                     // -------------- Email sent ----------------

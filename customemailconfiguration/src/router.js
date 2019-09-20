@@ -11,6 +11,26 @@ export default new Router({
       path: "/",
       name: "home",
       component: Emaillist
+    },
+    {
+      path: "/add",
+      name: "home",
+      component: Emaillist
+    },
+    {
+      path: "/composemail",
+      name: "home",
+      component: Emaillist
+    },
+    {
+      path: "/delete",
+      name: "home",
+      component: Emaillist
+    },
+    {
+      path: "/edit",
+      name: "home",
+      component: Emaillist
     }
   ]
 });
