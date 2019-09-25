@@ -17,7 +17,7 @@ class EmailController{
         (new EmailService).deleteEmailDetails(req,res);
     }
     async sendmail(req,res){
-        (new EmailService).sendmail(req,res);
+        (new EmailService).sendmailnode(req,res);
     }
 }
 const emailController=new EmailController();
