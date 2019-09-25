@@ -8,7 +8,7 @@ class EmailService {
   async addEmail(emailDetails) {
     return axios
       .post("http://localhost:3000/email/addemail", emailDetails)
-      .then(function() {});
+      .then(res => res.data);
   }
   async getDetailsById(id) {
     return axios

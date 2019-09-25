@@ -1,49 +1,24 @@
+const EmailService=require("../service/EmailService")
 
-const emailRepo = require('../repository/emailRepository').emailRepo
-
-class Email {
-
-
-    constructor(){
-        this.emailRepo=emailRepo
+class EmailController{
+    async addEmailDetails(req,res){
+        (new EmailService).addEmailDetails(req,res);
     }
-
-    // -----Insert a mail details to the list---------
-    async addEmailDetails(req, res) {
-        let result = emailRepo.addEmailDetails(req, res);
-        return result;
+    async getEmailDetails(req,res){
+        (new EmailService).getEmailDetails(req,res);
     }
-
-    // ---------Display list of email details----------
-    async getEmailDetails(req, res) {
-        let result = emailRepo.getEmailDetails(req, res);
-        return result;
+    async getDetailsById(req,res){
+        (new EmailService).getDetailsById(req,res);
     }
-
-    // --------------- Get Details by ID ------------------
-    async getDetailsById(req, res) {
-        let result = emailRepo.getDetailsById(req, res);
-        return result;
+    async updateEmailDetails(req,res){
+        (new EmailService).updateEmailDetails(req,res);
     }
-
-    // ------------------ Update email details ---------------------
-    async updateEmailDetails(req, res) {
-        let result = emailRepo.updateEmailDetails(req, res);
-        return result;
+    async deleteEmailDetails(req,res){
+        (new EmailService).deleteEmailDetails(req,res);
     }
-
-    // ----------------- Delete email from the list ------------------------
-    async deleteEmailDetails(req, res) {
-        let result = emailRepo.deleteEmailDetails(req, res);
-        return result;
-    }
-
-
-    // --------------------- Send a mail -----------------------
-    async sendmail(req, res) {
-        let result = emailRepo.sendmail(req, res);
-        return result;
+    async sendmail(req,res){
+        (new EmailService).sendmail(req,res);
     }
 }
-const email = new Email();
-module.exports = email;
+const emailController=new EmailController();
+module.exports=emailController
