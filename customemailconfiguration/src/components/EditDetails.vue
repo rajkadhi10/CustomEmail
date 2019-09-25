@@ -65,9 +65,10 @@ export default {
 
       //   ------------------- Load form filled details -----------------
       let email = await emailService.getDetailsById(id1);
-      this.username = email[0].username;
-      this.password = email[0].password;
-      this.service = email[0].service;
+      console.log(email)
+      this.username = email.username;
+      this.password = email.password;
+      this.service = email.service;
     },
 
     // ----------------------- Update details -----------------------

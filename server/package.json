@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "nyc mocha --timeout 10000 --exit",
-    "coverage":"nyc --reporter=lcov --reporter=text-lcov npm test"
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov npm test"
   },
   "author": "",
   "license": "ISC",
@@ -16,12 +16,6 @@
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "istanbul": "^0.4.5",
-    "jasmine": "^3.4.0",
-    "jasmine-console-reporter": "^3.1.0",
-    "jasmine-node": "^3.0.0",
-    "jasmine-supertest": "^1.0.0",
-    "jest": "^24.9.0",
     "mocha": "^6.2.0",
     "mock": "^0.1.1",
     "nock": "^11.3.4",
@@ -35,6 +29,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "cross-env": "^6.0.0"
+    "cross-env": "^6.0.0",
+    "sinon-express-mock": "^2.2.1"
   }
 }

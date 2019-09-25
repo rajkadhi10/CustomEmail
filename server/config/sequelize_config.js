@@ -17,7 +17,6 @@ const sequelize = new Sequelize("emaildb", "postgres", "postgres", {
 });
 
 sequelize.authenticate().then(() => {
-    // console.log("Success!");
 }).catch((err) => {
     console.log(err);
 });
