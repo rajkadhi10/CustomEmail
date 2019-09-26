@@ -4,7 +4,7 @@ const crypto = require("crypto"),
     algorithm = "aes-256-ctr",
     password = "helloraj";
 const emailRepo = require('../repository/emailRepository').emailRepo
-
+const CustomError = require('../mocks/CustomError');
 class Email {
 
     constructor() {
@@ -56,7 +56,7 @@ class Email {
             if (con !== undefined)
                 this.connection = con;
             if (req.body.id == undefined)
-                throw Error;
+            throw new CustomError("ID is not defined");
 
             const emailListByID = await emailRepo.getDetailsById(req.body, this.connection);
 
@@ -75,7 +75,7 @@ class Email {
             if (con !== undefined)
                 this.connection = con;
             if (req.body.id == undefined)
-                throw Error
+                throw new CustomError("ID is not defined");
 
             // ------------------ Password encryption -----------------
             let cipher = crypto.createCipher(algorithm, password)
@@ -102,7 +102,7 @@ class Email {
             if (con !== undefined)
                 this.connection = con;
             if (req.body.id == undefined)
-                throw Error;
+                throw new CustomError("ID is not defined");
 
             let result = await emailRepo.deleteEmailDetails(req.body, this.connection);
 
@@ -110,7 +110,7 @@ class Email {
             return result;
         } catch (err) {
             res.status(404).json({
-                message: "Can not delete contact"
+                message: err
             });
         }
 
@@ -120,8 +120,6 @@ class Email {
     // --------------------- Send a mail -----------------------
     async sendmail(req, res, con) {
         try {
-            // console.log(this.connection);
-            this.connection = authenticate.emailModel
             if (con !== undefined)
                 this.connection = con;
 
@@ -150,8 +148,7 @@ class Email {
                 if (!err) {
                     // -------------- Email sent ----------------
                     res.status(200).send("success");
-                }
-                else{
+                } else {
                     // ---------- Fail to send -----------
                     res.status(200).send("Fail");
                 }

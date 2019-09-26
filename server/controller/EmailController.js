@@ -2,22 +2,28 @@ const EmailService = require("../service/EmailService")
 
 class EmailController {
     async addEmailDetails(req, res) {
-        (new EmailService).addEmailDetails(req, res);
+        let emailService = new EmailService();
+        emailService.addEmailDetails(req, res);
     }
     async getEmailDetails(req, res) {
-        (new EmailService).getEmailDetails(req, res);
+        let emailService = new EmailService();
+        emailService.getEmailDetails(req, res);
     }
     async getDetailsById(req, res) {
-        (new EmailService).getDetailsById(req, res);
+        let emailService = new EmailService();
+        emailService.getDetailsById(req, res);
     }
     async updateEmailDetails(req, res) {
-        (new EmailService).updateEmailDetails(req, res);
+        let emailService = new EmailService();
+        emailService.updateEmailDetails(req, res);
     }
     async deleteEmailDetails(req, res) {
-        (new EmailService).deleteEmailDetails(req, res);
+        let emailService = new EmailService();
+        emailService.deleteEmailDetails(req, res);
     }
     async sendmail(req, res) {
-        (new EmailService).sendmail(req, res);
+        let emailService = new EmailService();
+        emailService.sendmail(req, res);
     }
 }
 const emailController = new EmailController();
