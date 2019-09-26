@@ -1,6 +1,6 @@
 class Connection {
-    constructor(){
-        this.mockData=[]
+    constructor() {
+        this.mockData = []
     }
     create(value) {
         this.mockData.push(value);
@@ -8,23 +8,14 @@ class Connection {
     }
 
     findAll() {
-       return this.mockData;
+        return this.mockData;
     }
-    update(){
+    update() {
         return "updated";
     }
-    destroy(){
+    destroy() {
         return "deleted";
     }
-    // send(data) {
-    //     this._responseData = data;
-    //     return this;
-    // }
-
-    // json(value) {
-    //     this._responseText.push(JSON.stringify(value));
-    //     return this;
-    // }
 }
-const con=new Connection()
+const con = new Connection()
 module.exports = con;

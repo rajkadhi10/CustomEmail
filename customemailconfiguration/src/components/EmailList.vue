@@ -5,7 +5,7 @@
         <br />
         <!-------------------- Add email details ------------------->
         <div class="d-flex justify-end mx-auto pa-5">
-          <v-btn color="primary" v-bind:to="'/add'" @click="addEmail()">
+          <v-btn color="primary"  @click="addEmail()">
             <v-icon small dark left>fas fa-plus</v-icon>Add custom email configuration
           </v-btn>
         </div>
@@ -16,7 +16,7 @@
 
         <!------------------- Compose email -------------------------->
         <div class="d-flex justify-center mx-auto">
-          <v-btn v-if="compose  " v-bind:to="'/composemail'" color="red" @click="composeEmail()">
+          <v-btn v-if="compose"   color="red" @click="composeEmail()">
             <v-icon small dark>fas fa-edit</v-icon>Compose
           </v-btn>
         </div>
@@ -53,12 +53,12 @@
               <v-list>
                 <v-list-item>
                   <v-list-item-title  @click="editDialog=true">
-                    <v-btn color="primary" v-bind:to="'/edit'" text @click="editData(item.id)">Edit</v-btn>
+                    <v-btn color="primary"  text @click="editData(item.id)">Edit</v-btn>
                   </v-list-item-title>
                 </v-list-item>
                 <v-list-item>
                   <v-list-item-title @click="deleteDialog=true">
-                    <v-btn color="error"  v-bind:to="'/delete'" text @click="deleteid(item.id)">Delete</v-btn>
+                    <v-btn color="error"  text @click="deleteid(item.id)">Delete</v-btn>
                   </v-list-item-title>
                 </v-list-item>
               </v-list>

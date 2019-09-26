@@ -16,18 +16,13 @@ const sequelize = new Sequelize("emaildb", "postgres", "postgres", {
     }
 });
 
-sequelize.authenticate().then(() => {
-}).catch((err) => {
-    console.log(err);
-});
+sequelize.authenticate().then(() => {});
 
 const emailModel = email(sequelize, Sequelize)
 
 sequelize.sync({
     force: false
-}).then(() => {
-    // console.log("Db and Tables Created");
-});
+}).then(() => {});
 
 module.exports = {
     emailModel,

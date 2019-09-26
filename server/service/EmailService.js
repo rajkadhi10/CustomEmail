@@ -7,11 +7,10 @@ const emailRepo = require('../repository/emailRepository').emailRepo
 
 class Email {
 
-
     constructor() {
         this.emailRepo = emailRepo;
         this.connection = authenticate.emailModel;
-        this.nodemailer=nodemailer
+        this.nodemailer = nodemailer
     }
 
     // -----Insert a mail details to the list---------
@@ -24,7 +23,9 @@ class Email {
             let crypted = cipher.update(req.body.password, "utf8", "hex")
             crypted += cipher.final("hex");
             req.body.password = crypted;
+
             const result = await emailRepo.addEmailDetails(req.body, this.connection);
+
             res.status(200).json({
                 message: "Added"
             });
@@ -39,19 +40,13 @@ class Email {
 
     // ---------Display list of email details----------
     async getEmailDetails(req, res, con) {
-        try {
-            if (con !== undefined)
-                this.connection = con;
+        if (con !== undefined)
+            this.connection = con;
 
-            const result = await emailRepo.getEmailDetails(this.connection);
+        const result = await emailRepo.getEmailDetails(this.connection);
 
-            res.status(200).json(result);
-            return result;
-        } catch (err) {
-            res.status(404).json({
-                message: "Error to fetch data"
-            });
-        }
+        res.status(200).json(result);
+        return result;
 
     }
 
@@ -60,12 +55,11 @@ class Email {
         try {
             if (con !== undefined)
                 this.connection = con;
-
             if (req.body.id == undefined)
                 throw Error;
-            // console.log(req.body);
 
             const emailListByID = await emailRepo.getDetailsById(req.body, this.connection);
+
             res.status(200).send(emailListByID[0].dataValues);
         } catch (err) {
             res.status(404).json({
@@ -80,9 +74,9 @@ class Email {
         try {
             if (con !== undefined)
                 this.connection = con;
-
             if (req.body.id == undefined)
-                throw Error;
+                throw Error
+
             // ------------------ Password encryption -----------------
             let cipher = crypto.createCipher(algorithm, password)
             let crypted = cipher.update(req.body.password, "utf8", "hex")
@@ -105,12 +99,13 @@ class Email {
     // ----------------- Delete email from the list ------------------------
     async deleteEmailDetails(req, res, con) {
         try {
-
             if (con !== undefined)
                 this.connection = con;
             if (req.body.id == undefined)
                 throw Error;
+
             let result = await emailRepo.deleteEmailDetails(req.body, this.connection);
+
             res.status(200).send("Deleted")
             return result;
         } catch (err) {
@@ -130,7 +125,6 @@ class Email {
             if (con !== undefined)
                 this.connection = con;
 
-
             let notes = await emailRepo.sendmail(req.body, this.connection)
 
             // -------------------- Decrypt the password -------------------------
@@ -146,30 +140,26 @@ class Email {
                     pass: decryptedPassword
                 }
             })
-
             const mailOptions = {
                 from: req.body.username,
                 to: req.body.receivers,
                 subject: req.body.subject,
                 text: req.body.body
             }
-
             transporter.sendMail(mailOptions, function (err, info) {
                 if (!err) {
-                  // -------------- Email sent ----------------
+                    // -------------- Email sent ----------------
                     res.status(200).send("success");
+                }
+                else{
+                    // ---------- Fail to send -----------
+                    res.status(200).send("Fail");
                 }
             });
         } catch (err) {
-            console.log(err);
-
-            res.status(404).json({
-                message: "Can't send email"
-            });
+            res.status(404).send("Can't send email");
         }
         return res;
     }
 }
-
-
 module.exports = Email;

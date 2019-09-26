@@ -18,18 +18,6 @@
           </v-text-field>
           <v-text-field v-model="subject" label="Subject" required outlined></v-text-field>
           <v-textarea v-model="body" required outlined></v-textarea>
-          <v-file-input
-            v-model="files"
-            placeholder="Upload your documents"
-            label="File input"
-            multiple
-            webkitdirectory
-            prepend-icon="mdi-paperclip"
-          >
-            <template v-slot:selection="{ text }">
-              <v-chip small label color="primary">{{ text }}</v-chip>
-            </template>
-          </v-file-input>
         </v-card-text>
         <v-card-actions>
           <v-btn class="mr-4" color="primary" @click="submit">submit</v-btn>
@@ -86,19 +74,20 @@ export default {
 
       //   -------------- Calling mail send method -------------------
       let res = await emailhandler.sendEmail(composeDetails);
+            
       if (res == "success") {
         this.composeDialog = false;
       } else {
         alert("Error!!");
         this.composeDialog = false;
       }
-       this.$router.push("/")
+      
     },
 
     // ------------------------- Close the dialog -------------------------
     composeDialogHide() {
       this.composeDialog = false;
-       this.$router.push("/")
+      
     },
     clear() {
       this.receiver = "";

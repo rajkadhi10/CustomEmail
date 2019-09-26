@@ -1,4 +1,4 @@
-class IncomingMessage {
+class Request {
      abc(){}
 
     constructor(body = {}) {
@@ -6,5 +6,5 @@ class IncomingMessage {
     }
 }
 module.exports = {
-    request:IncomingMessage
+    request:Request
 };

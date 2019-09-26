@@ -34,12 +34,12 @@ export default {
       await emailService.deleteDetails(deleteDetail);
       this.deleteDialog = false;
       this.getEmail();
-      this.$router.push("/");
+    
     },
     // ----------------------Dialog close----------------------
     deleteDialogHide() {
       this.deleteDialog = false;
-      this.$router.push("/");
+     
     },
     // ---------------------Dialog show---------------------------
     deleteDialogShow(id) {

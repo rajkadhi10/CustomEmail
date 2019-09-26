@@ -1,14 +1,9 @@
-
-class ServerResponse {
+class Response {
 
     constructor() {
         this.statusCode = 0;
         this._responseText = [];
     }
-    get responseText() {
-        return this._responseText.join('');
-    }
-
     status(code) {
         this.statusCode = code;
         return this;
@@ -26,5 +21,5 @@ class ServerResponse {
 }
 
 module.exports = {
-    response:ServerResponse
+    response: Response
 };

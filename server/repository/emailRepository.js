@@ -1,10 +1,6 @@
-const authenticate = require("../config/sequelize_config");
 class EmailRepo {
-
-
     // -----Insert a mail details to the list---------
     async addEmailDetails(body, con) {
-        // ------------------ Create row------------------------
         return await con.create(body, {
             validate: true
         });
@@ -18,11 +14,8 @@ class EmailRepo {
 
     }
 
-    // --------------- Get Details by ID ------------------
+    // ----------- Get Details by ID --------------
     async getDetailsById(body, con) {
-
-        console.log("R:"+body.id);
-        
         return await con.findAll({
             where: {
                 id: body.id
@@ -31,9 +24,8 @@ class EmailRepo {
 
     }
 
-    // ------------------ Update email details ---------------------
+    // ---------- Update email details -------------
     async updateEmailDetails(body, con) {
-
         return await con.update(body, {
             where: {
                 id: body.id
@@ -41,9 +33,9 @@ class EmailRepo {
         });
 
     }
-    // ----------------- Delete email from the list ------------------------
-    async deleteEmailDetails(body, con) {
 
+    // ----------- Delete email from the list ----------------
+    async deleteEmailDetails(body, con) {
         return await con.destroy({
             where: {
                 id: body.id
@@ -52,10 +44,8 @@ class EmailRepo {
 
     }
 
-    // --------------------- Send a mail -----------------------
+    // -------------- Send a mail ------------------
     async sendmail(body, con) {
-
-        // -------------------- Finding password for the user ---------------
         return await con.findAll({
             where: {
                 id: body.id
@@ -63,7 +53,7 @@ class EmailRepo {
         });
     }
 }
-let e1 = new EmailRepo();
+let emailRepo = new EmailRepo();
 module.exports = {
-    emailRepo: e1
+    emailRepo: emailRepo
 }

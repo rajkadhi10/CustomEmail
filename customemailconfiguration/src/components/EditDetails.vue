@@ -65,7 +65,6 @@ export default {
 
       //   ------------------- Load form filled details -----------------
       let email = await emailService.getDetailsById(id1);
-      console.log(email)
       this.username = email.username;
       this.password = email.password;
       this.service = email.service;
@@ -83,13 +82,13 @@ export default {
       await emailService.updateDetails(updateDetail);
       this.editDialog = false;
       this.getEmail();
-      this.$router.push("/");
+      
     },
 
     // ------------------Close dailog-------------------
     editDialogHide() {
       this.editDialog = false;
-      this.$router.push("/");
+      
     },
 
     // ----------------- Show dialog -------------------

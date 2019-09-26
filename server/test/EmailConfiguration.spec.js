@@ -29,7 +29,7 @@ let reqMail = {
 let req = new mockRequest(mockData);
 let reqWithId = new mockRequest(mockDataWithId)
 let reqWithoutBody = new mockRequest();
-let reqEmail=new mockRequest(reqMail)
+let reqEmail = new mockRequest(reqMail)
 let res = new mockResponse();
 
 
@@ -72,7 +72,7 @@ describe("/getDetails", () => {
             expect(res.statusCode).to.be.equal(200);
         });
     });
- 
+
 });
 
 
@@ -153,19 +153,26 @@ describe("/sendmail", () => {
         let mailResponse;
         let mailTransportStub;
         before(async () => {
-            
-            mailTransportStub= sinon.stub(emailService.nodemailer,"createTransport").callsFake(()=>{
+
+            mailTransportStub = sinon.stub(emailService.nodemailer, "createTransport").callsFake(() => {
                 return true;
             })
-
             mailResponse = await emailService.sendmail(reqEmail, res, con);
 
         })
-       
-        it("should be true", async () => {
+        it("create transport method has been called", async () => {
             expect(mailTransportStub.called).to.be.true;
         });
-       
-       
+    });
+    context("Error:", () => {
+        let mailErrorResponse;
+        before(async () => {
+            mailErrorResponse = await emailService.sendmail(reqWithoutBody, res, con);
+        })
+        it("if no body defined return error...", async () => {
+            expect(res.statusCode).to.be.equal(404);
+        });
+
+
     });
 });
