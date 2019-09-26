@@ -1,23 +1,21 @@
-const authenticate = require("../config/sequelize_config");
+
 const nodemailer = require("nodemailer")
 const crypto = require("crypto"),
     algorithm = "aes-256-ctr",
     password = "helloraj";
 const emailRepo = require('../repository/emailRepository').emailRepo
 const CustomError = require('../mocks/CustomError');
+
 class Email {
 
-    constructor() {
+    constructor(connection) {
         this.emailRepo = emailRepo;
-        this.connection = authenticate.emailModel;
+        this.connection = connection;
         this.nodemailer = nodemailer
     }
-
     // -----Insert a mail details to the list---------
-    async addEmailDetails(req, res, con) {
+    async addEmailDetails(req, res) {
         try {
-            if (con !== undefined)
-                this.connection = con;
             // ------------------------- password encryption -------------------
             let cipher = crypto.createCipher(algorithm, password)
             let crypted = cipher.update(req.body.password, "utf8", "hex")
@@ -39,10 +37,8 @@ class Email {
     }
 
     // ---------Display list of email details----------
-    async getEmailDetails(req, res, con) {
-        if (con !== undefined)
-            this.connection = con;
-
+    async getEmailDetails(req, res) {
+    
         const result = await emailRepo.getEmailDetails(this.connection);
 
         res.status(200).json(result);
@@ -51,12 +47,11 @@ class Email {
     }
 
     // --------------- Get Details by ID ------------------
-    async getDetailsById(req, res, con) {
+    async getDetailsById(req, res) {
         try {
-            if (con !== undefined)
-                this.connection = con;
+         
             if (req.body.id == undefined)
-            throw new CustomError("ID is not defined");
+                throw new CustomError("ID is not defined");
 
             const emailListByID = await emailRepo.getDetailsById(req.body, this.connection);
 
@@ -70,10 +65,9 @@ class Email {
     }
 
     // ------------------ Update email details ---------------------
-    async updateEmailDetails(req, res, con) {
+    async updateEmailDetails(req, res) {
         try {
-            if (con !== undefined)
-                this.connection = con;
+         
             if (req.body.id == undefined)
                 throw new CustomError("ID is not defined");
 
@@ -97,10 +91,9 @@ class Email {
     }
 
     // ----------------- Delete email from the list ------------------------
-    async deleteEmailDetails(req, res, con) {
+    async deleteEmailDetails(req, res) {
         try {
-            if (con !== undefined)
-                this.connection = con;
+         
             if (req.body.id == undefined)
                 throw new CustomError("ID is not defined");
 
@@ -118,10 +111,9 @@ class Email {
 
 
     // --------------------- Send a mail -----------------------
-    async sendmail(req, res, con) {
+    async sendmail(req, res) {
         try {
-            if (con !== undefined)
-                this.connection = con;
+          
 
             let notes = await emailRepo.sendmail(req.body, this.connection)
 

@@ -3,8 +3,8 @@ const EmailService = require("../service/EmailService")
 const mockRequest = require("../mocks/request").request;
 const mockResponse = require("../mocks/response").response;
 const sinon = require("sinon");
-const emailService = new EmailService();
 const con = require("../mocks/connection")
+const emailService = new EmailService(con);
 let mockData = {
     username: "raj@raj.co.in",
     password: "abcd",
@@ -38,7 +38,7 @@ describe("/addDetails", () => {
     context("Add Email Details Success", () => {
         let addEmailDetailsResponse;
         before(async () => {
-            addEmailDetailsResponse = await emailService.addEmailDetails(req, res, con);
+            addEmailDetailsResponse = await emailService.addEmailDetails(req, res);
         })
         it("should return status ok", async () => {
             expect(res.statusCode).to.be.equal(200);
@@ -50,7 +50,7 @@ describe("/addDetails", () => {
     context("Add Email Details Error", () => {
         let addEmailDetailsResponse;
         before(async () => {
-            addEmailDetailsResponse = await emailService.addEmailDetails(reqWithoutBody, res, con);
+            addEmailDetailsResponse = await emailService.addEmailDetails(reqWithoutBody, res);
         })
         it("should return status 404 if body not defined", async () => {
             expect(res.statusCode).to.be.equal(404);
@@ -66,7 +66,7 @@ describe("/getDetails", () => {
     context("Get Email Details Success", () => {
         let getEmailDetailsResponse;
         before(async () => {
-            getEmailDetailsResponse = await emailService.getEmailDetails(req, res, con);
+            getEmailDetailsResponse = await emailService.getEmailDetails(req, res);
         })
         it("should return status ok", async () => {
             expect(res.statusCode).to.be.equal(200);
@@ -82,7 +82,7 @@ describe("/getdetailsbyid", () => {
     context("Success:", () => {
         let getEmailDetailsByIdResponse;
         before(async () => {
-            getEmailDetailsByIdResponse = await emailService.getDetailsById(reqWithId, res, con);
+            getEmailDetailsByIdResponse = await emailService.getDetailsById(reqWithId, res);
         })
         it("should return status ok", async () => {
             expect(res.statusCode).to.be.equal(200);
@@ -91,7 +91,7 @@ describe("/getdetailsbyid", () => {
     context("Error:", () => {
         let getEmailDetailsByIdResponse;
         before(async () => {
-            getEmailDetailsByIdResponse = await emailService.getDetailsById(reqWithoutBody, res, con);
+            getEmailDetailsByIdResponse = await emailService.getDetailsById(reqWithoutBody, res);
         })
         it("should return status error", async () => {
             expect(res.statusCode).to.be.equal(404);
@@ -104,7 +104,7 @@ describe("/deleteDetails", () => {
     context("Success:", () => {
         let deleteDetailsResponse;
         before(async () => {
-            deleteDetailsResponse = await emailService.deleteEmailDetails(reqWithId, res, con);
+            deleteDetailsResponse = await emailService.deleteEmailDetails(reqWithId, res);
         })
         it("should return status ok", async () => {
             expect(res.statusCode).to.be.equal(200);
@@ -113,7 +113,7 @@ describe("/deleteDetails", () => {
     context("Error:", () => {
         let deleteDetailsResponse;
         before(async () => {
-            deleteDetailsResponse = await emailService.deleteEmailDetails(reqWithoutBody, res, con);
+            deleteDetailsResponse = await emailService.deleteEmailDetails(reqWithoutBody, res);
         })
         it("should return status error", async () => {
             expect(res.statusCode).to.be.equal(404);
@@ -126,7 +126,7 @@ describe("/editDetails", () => {
     context("Success:", () => {
         let editDetailsResponse;
         before(async () => {
-            editDetailsResponse = await emailService.updateEmailDetails(reqWithId, res, con);
+            editDetailsResponse = await emailService.updateEmailDetails(reqWithId, res);
         })
         it("should return status ok", async () => {
             expect(res.statusCode).to.be.equal(200);
@@ -138,7 +138,7 @@ describe("/editDetails", () => {
     context("Error:", () => {
         let editDetailsResponse;
         before(async () => {
-            editDetailsResponse = await emailService.updateEmailDetails(reqWithoutBody, res, con);
+            editDetailsResponse = await emailService.updateEmailDetails(reqWithoutBody, res);
         })
         it("should return error", async () => {
             expect(res.statusCode).to.be.equal(404);
@@ -155,19 +155,26 @@ describe("/sendmail", () => {
         before(async () => {
 
             mailTransportStub = sinon.stub(emailService.nodemailer, "createTransport").callsFake(() => {
-                return true;
-            })
-            mailResponse = await emailService.sendmail(reqEmail, res, con);
+                    return {
+                        sendMail:() => {
+                            return true;
+                        }
+                    }  
+                })
+            mailResponse = await emailService.sendmail(reqEmail, res);
 
         })
         it("create transport method has been called", async () => {
+           
+            
             expect(mailTransportStub.called).to.be.true;
         });
+     
     });
     context("Error:", () => {
         let mailErrorResponse;
         before(async () => {
-            mailErrorResponse = await emailService.sendmail(reqWithoutBody, res, con);
+            mailErrorResponse = await emailService.sendmail(reqWithoutBody, res);
         })
         it("if no body defined return error...", async () => {
             expect(res.statusCode).to.be.equal(404);
